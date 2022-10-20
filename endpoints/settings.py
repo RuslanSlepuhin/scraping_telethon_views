@@ -54,12 +54,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:8080',
-#     'http://127.0.0.1:8000',
-#     'http://localhost:3000',
-# ]
+# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+    'http://127.0.0.1:8000',
+    'http://localhost:3000'
+]
 
 
 ROOT_URLCONF = 'endpoints.urls'
