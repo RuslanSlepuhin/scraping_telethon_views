@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'rest_framework',
     'parser',
-    'django.contrib.staticfiles',
+    # 'django.contrib.staticfiles_dirs',
     'whitenoise.runserver_nostatic',
 ]
 
@@ -53,9 +53,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+    'http://127.0.0.1:8000',
+    'http://localhost:3000',
+]
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'endpoints.urls'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 TEMPLATES = [
     {
@@ -129,7 +136,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'staticfiles_dirs'),
+# )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
