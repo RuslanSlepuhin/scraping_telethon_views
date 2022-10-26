@@ -41,7 +41,9 @@ class LastSessionView(generics.ListAPIView):
 
 class AdminLastSessionView(viewsets.ModelViewSet):
     serializer_class = AdminLastSessionSerializer
-    querysetMax = CurrentSession.objects.all().aggregate(Max('session'))
-    last_session = querysetMax['session__max']
-    queryset = AdminLastSession.objects.filter(session=last_session)
+    # querysetMax = CurrentSession.objects.all().aggregate(Max('session'))
+    # last_session = querysetMax['session__max']
+    # queryset = AdminLastSession.objects.filter(session=last_session)
+    queryset = AdminLastSession.objects.filter()
+
     permission_classes = [permissions.AllowAny]
