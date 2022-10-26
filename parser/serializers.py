@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from parser.models import MexModel, CurrentSession, Backend, AdminLastSession
+from parser.models import MexModel, CurrentSession, AdminLastSession
 
 
 class MexSerializer(serializers.ModelSerializer):
@@ -8,10 +8,6 @@ class MexSerializer(serializers.ModelSerializer):
         model = MexModel
         fields = ['tag', 'value']
 
-class LastSessionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Backend
-        fields = '__all__'
 
 class AdminLastSessionSerializer(serializers.ModelSerializer):
     class Meta:

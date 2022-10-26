@@ -63,6 +63,13 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000/posts",
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 5,
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',  # django rest swagger
+}
+
 ROOT_URLCONF = 'endpoints.urls'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
