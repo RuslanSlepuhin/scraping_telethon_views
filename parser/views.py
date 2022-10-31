@@ -24,3 +24,14 @@ class AdminLastSessionView(viewsets.ModelViewSet):
     queryset = AdminLastSession.objects.filter()
 
     permission_classes = [permissions.AllowAny]
+
+class GetFromAdminView(generics.GenericAPIView):
+    serializer_class = MexSerializer
+    queryset = AdminLastSession.objects.filter()
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        for i in request.data['results']:
+            print(i)
+        return Response({'success': serializer.data})
