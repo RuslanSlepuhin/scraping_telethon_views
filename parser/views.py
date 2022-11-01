@@ -6,8 +6,8 @@ from rest_framework import viewsets, permissions, generics
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from parser.models import MexModel, CurrentSession, AdminLastSession
-from parser.serializers import MexSerializer, AdminLastSessionSerializer
+from parser.models import MexModel, CurrentSession, AdminLastSession, PatternModel
+from parser.serializers import MexSerializer, AdminLastSessionSerializer, PatternSerializer
 
 
 class MexView(viewsets.ModelViewSet):
@@ -35,3 +35,43 @@ class GetFromAdminView(generics.GenericAPIView):
         for i in request.data['results']:
             print(i)
         return Response({'success': serializer.data})
+
+class PatternView(generics.GenericAPIView):
+
+
+    serializer_class = PatternSerializer
+    queryset = PatternModel.objects.all()
+
+    def get(self, request):
+        queryset = PatternModel.objects.all()
+        self.how_pattern_dict: dict
+        self.show_pattern_dict = {}
+        keys = []
+        for i in queryset:
+            print(i.key)
+            keys.append(i.key)
+        keys = set(keys)
+        for i in keys:
+            self.show_pattern_dict[i] = {'ma': [], 'mex': []}
+
+        for i in queryset:
+            if i.ma:
+                self.show_pattern_dict[i.key]['ma'].append(i.value)
+            elif i.mex:
+                self.show_pattern_dict[i.key]['mex'].append(i.value)
+
+        return Response({'pattern': self.show_pattern_dict})
+
+
+    def post(self, request):
+        serializer = PatternSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # print(serializer.validated_data())
+        PatternModel.objects.create(
+            key = serializer.validated_data['key'],
+            ma = serializer.validated_data['ma'],
+            mex = serializer.validated_data['mex'],
+            value = serializer.validated_data['value']
+        )
+
+        return Response({'pattern': self.show_pattern_dict})

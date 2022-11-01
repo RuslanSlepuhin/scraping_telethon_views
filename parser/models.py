@@ -43,3 +43,14 @@ class AdminLastSession(models.Model):
         managed = False
         db_table = 'admin_last_session'
 
+class PatternModel(models.Model):
+    key = models.CharField(max_length=100, blank=True, null=True)
+    ma = models.BooleanField(blank=True, null=True)
+    mex = models.BooleanField(blank=True, null=True)
+    value = models.CharField(max_length=250, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'pattern'
+
+
