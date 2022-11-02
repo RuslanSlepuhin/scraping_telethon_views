@@ -17,6 +17,9 @@ class CurrentSession(models.Model):
         managed = False
         db_table = 'current_session'
 
+    def __str__(self):
+        return self.session
+
 
 
 class AdminLastSession(models.Model):

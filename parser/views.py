@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from parser.models import MexModel, CurrentSession, AdminLastSession, PatternModel
-from parser.serializers import MexSerializer, AdminLastSessionSerializer, PatternSerializer
+from parser.serializers import MexSerializer, AdminLastSessionSerializer, PatternSerializer, ProfSerializer, \
+    PatternChangeSerializer
 
 
 class MexView(viewsets.ModelViewSet):
@@ -22,12 +23,11 @@ class AdminLastSessionView(viewsets.ModelViewSet):
     # last_session = querysetMax['session__max']
     # queryset = AdminLastSession.objects.filter(session=last_session)
     queryset = AdminLastSession.objects.filter()
-
     permission_classes = [permissions.AllowAny]
 
 class GetFromAdminView(generics.GenericAPIView):
     serializer_class = MexSerializer
-    queryset = AdminLastSession.objects.filter()
+    queryset = AdminLastSession.objects.all()
 
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -37,7 +37,6 @@ class GetFromAdminView(generics.GenericAPIView):
         return Response({'success': serializer.data})
 
 class PatternView(generics.GenericAPIView):
-
 
     serializer_class = PatternSerializer
     queryset = PatternModel.objects.all()
@@ -62,7 +61,6 @@ class PatternView(generics.GenericAPIView):
 
         return Response({'pattern': self.show_pattern_dict})
 
-
     def post(self, request):
         serializer = PatternSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -75,3 +73,13 @@ class PatternView(generics.GenericAPIView):
         )
 
         return Response({'pattern': self.show_pattern_dict})
+
+class BackendView(viewsets.ModelViewSet):
+    serializer_class = ProfSerializer
+    queryset = AdminLastSession.objects.filter(profession__icontains='backend').order_by('time_of_public')
+    permission_classes = [permissions.AllowAny]
+
+class PatternChangeView(viewsets.ModelViewSet):
+    serializer_class = PatternChangeSerializer
+    queryset = PatternModel.objects.all().order_by('key')
+    permission_classes = [permissions.AllowAny]

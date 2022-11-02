@@ -19,3 +19,12 @@ class PatternSerializer(serializers.ModelSerializer):
         model = PatternModel
         fields = '__all__'
 
+class ProfSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdminLastSession
+        fields = '__all__'
+
+class PatternChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PatternModel
+        fields = '__all__'
